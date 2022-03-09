@@ -15,7 +15,8 @@ class ActivityAddTodo : AppCompatActivity() {
     private var mButtonAdd: Button? = null
 
     object Constants {
-        const val EXTRA_RESULT_TODO_STRING = "TODO_STRING"
+        const val EXTRA_TODO_TITLE = "TODO_TITLE"
+        const val EXTRA_TODO_DESCRIPTION = "TODO_DESCRIPTION"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,18 +24,24 @@ class ActivityAddTodo : AppCompatActivity() {
         setContentView(R.layout.activity_add_todo)
 
         mEditTextTitle = findViewById<EditText>(R.id.activity_add_todo_EditText_title)
-        mEditTextDescription = findViewById<EditText>(R.id.activity_add_todo_EditText_title)
+        mEditTextDescription = findViewById<EditText>(R.id.activity_add_todo_EditText_description)
         mButtonAdd = findViewById<Button>(R.id.activity_add_todo_Button_add)
+
+        if (intent.hasExtra(Constants.EXTRA_TODO_TITLE)){
+            // If no position,
+            mEditTextTitle?.setText(intent.getStringExtra(Constants.EXTRA_TODO_TITLE))
+            mEditTextDescription?.setText(intent.getStringExtra(Constants.EXTRA_TODO_DESCRIPTION))
+            mButtonAdd?.text = getString(R.string.modify)
+        }
 
         mButtonAdd?.setOnClickListener {
             val title = mEditTextTitle?.text.toString()
-            val description = mEditTextDescription?.text
+            val description = mEditTextDescription?.text.toString()
             if (!title.isNullOrEmpty()) {
-                intent = Intent()
-                intent.putExtra(Constants.EXTRA_RESULT_TODO_STRING,title)
+                intent.putExtra(Constants.EXTRA_TODO_TITLE,title)
+                intent.putExtra(Constants.EXTRA_TODO_DESCRIPTION,description)
                 setResult(Activity.RESULT_OK,intent)
-            }else
-            {
+            }else {
                 setResult(Activity.RESULT_CANCELED)
             }
             finish()

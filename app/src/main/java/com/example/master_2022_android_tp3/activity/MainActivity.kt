@@ -17,8 +17,10 @@ class MainActivity : AppCompatActivity(), AdapterTodo.AdapterTodoListener {
     private lateinit var mLayoutManager: LinearLayoutManager
     private var mAdapter: AdapterTodo? = null
     private val RESULT_CODE_ADD: Int = 10
+    private val RESULT_CODE_MODIFY: Int = 11
     private var mButtonAdd: Button? = null
     private var mRecyclerView: RecyclerView? = null
+    private var mModificationPosition = -1
     private var listData = mutableListOf<String>(
         "TODO1",
         "TODO2",
@@ -54,22 +56,28 @@ class MainActivity : AppCompatActivity(), AdapterTodo.AdapterTodoListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == RESULT_CODE_ADD) {
-            if (resultCode == Activity.RESULT_OK) {
-                val todostring =
-                    data?.getStringExtra(ActivityAddTodo.Constants.EXTRA_RESULT_TODO_STRING)
-                if (!todostring.isNullOrEmpty())
+        if (resultCode == Activity.RESULT_OK) {
+        if (requestCode == RESULT_CODE_ADD || requestCode == RESULT_CODE_MODIFY) {
+            val todostring =
+                data?.getStringExtra(ActivityAddTodo.Constants.EXTRA_TODO_TITLE)
+            if (!todostring.isNullOrEmpty())
+                if (requestCode == RESULT_CODE_ADD) {
                     listData.add(todostring)
+                } else{
+                    listData[mModificationPosition]=todostring
+                }
                 mAdapter?.notifyDataSetChanged()
-            } else {
-                Toast.makeText(this, getString(R.string.add_canceled), Toast.LENGTH_LONG).show()
             }
+        }
+        else {
+            Toast.makeText(this, getString(R.string.add_canceled), Toast.LENGTH_LONG).show()
         }
     }
 
     override fun onItemClicked(clickedView: View) {
-        val position = mLayoutManager.getPosition(clickedView)
-        Toast.makeText(this, ""+position, Toast.LENGTH_LONG).show()
-
+        mModificationPosition = mLayoutManager.getPosition(clickedView)
+        intent = Intent(this, ActivityAddTodo::class.java)
+        intent.putExtra(ActivityAddTodo.Constants.EXTRA_TODO_TITLE,listData[mModificationPosition])
+        startActivityForResult(intent, RESULT_CODE_MODIFY)
     }
 }
