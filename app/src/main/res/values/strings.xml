@@ -3,4 +3,5 @@
     <string name="description">Description</string>
     <string name="titre">Titre</string>
     <string name="ajouter">Ajouter</string>
+    <string name="add_canceled">Ajout annulé</string>
 </resources>

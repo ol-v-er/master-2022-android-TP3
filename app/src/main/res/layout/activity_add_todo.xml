@@ -7,7 +7,7 @@
     tools:context=".activity.ActivityAddTodo">
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/activity_add_todo_EditText_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="138dp"
@@ -15,13 +15,13 @@
         android:ems="10"
         android:hint="@string/titre"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextMultiLine"
+        app:layout_constraintBottom_toTopOf="@id/activity_add_todo_EditText_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/activity_add_todo_EditText_description"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:layout_marginTop="52dp"
@@ -33,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@id/activity_add_todo_EditText_title" />
 
     <Button
         android:id="@+id/activity_add_todo_Button_add"
@@ -43,5 +43,5 @@
         android:text="@string/ajouter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+        app:layout_constraintTop_toBottomOf="@id/activity_add_todo_EditText_description" />
 </androidx.constraintlayout.widget.ConstraintLayout>
