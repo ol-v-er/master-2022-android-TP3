@@ -1,9 +1,10 @@
-package com.example.master_2022_android_tp3
+package com.example.master_2022_android_tp3.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.master_2022_android_tp3.R
 import com.example.master_2022_android_tp3.adapter.AdapterTodo
 
 class MainActivity : AppCompatActivity() {
