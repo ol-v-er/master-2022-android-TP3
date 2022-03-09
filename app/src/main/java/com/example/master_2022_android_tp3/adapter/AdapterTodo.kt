@@ -7,8 +7,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.master_2022_android_tp3.R
 
-class AdapterTodo(private val dataSet: MutableList<String>) :
+class AdapterTodo(private val dataSet: MutableList<String>, private val listener:AdapterTodoListener) :
         RecyclerView.Adapter<AdapterTodo.ViewHolder>() {
+
+    interface AdapterTodoListener{
+        fun onItemClicked(clickedView:View)
+    }
 
     /**
      * Provide a reference to the type of views that you are using
@@ -17,7 +21,6 @@ class AdapterTodo(private val dataSet: MutableList<String>) :
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textViewTitle: TextView
         val textViewDescription: TextView
-
         init {
             // Define click listener for the ViewHolder's View.
             textViewTitle = view.findViewById(R.id.cell_item_todo_TextView_title)
@@ -29,6 +32,9 @@ class AdapterTodo(private val dataSet: MutableList<String>) :
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.cell_item_todo, viewGroup, false)
+        view.setOnClickListener {
+            listener.onItemClicked(view)
+        }
         return ViewHolder(view)
     }
 

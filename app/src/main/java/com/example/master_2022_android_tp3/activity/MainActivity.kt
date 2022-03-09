@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,8 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.master_2022_android_tp3.R
 import com.example.master_2022_android_tp3.adapter.AdapterTodo
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AdapterTodo.AdapterTodoListener {
 
+    private lateinit var mLayoutManager: LinearLayoutManager
     private var mAdapter: AdapterTodo? = null
     private val RESULT_CODE_ADD: Int = 10
     private var mButtonAdd: Button? = null
@@ -39,8 +41,9 @@ class MainActivity : AppCompatActivity() {
         mButtonAdd = findViewById<Button>(R.id.activity_main_Button_add)
 
         // init the recyclerView
-        mRecyclerView?.layoutManager = LinearLayoutManager(baseContext)
-        mAdapter = AdapterTodo(listData);
+        mLayoutManager = LinearLayoutManager(baseContext)
+        mRecyclerView?.layoutManager = mLayoutManager
+        mAdapter = AdapterTodo(listData,this);
         mRecyclerView?.adapter = mAdapter
 
         mButtonAdd?.setOnClickListener {
@@ -62,5 +65,11 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, getString(R.string.add_canceled), Toast.LENGTH_LONG).show()
             }
         }
+    }
+
+    override fun onItemClicked(clickedView: View) {
+        val position = mLayoutManager.getPosition(clickedView)
+        Toast.makeText(this, ""+position, Toast.LENGTH_LONG).show()
+
     }
 }
